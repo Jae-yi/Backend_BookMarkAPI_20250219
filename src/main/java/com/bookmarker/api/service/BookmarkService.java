@@ -38,4 +38,16 @@ public class BookmarkService {
         Page<BookmarkDTO> bookmarkPage = repository.findBookmarks(pageable);
         return new BookmarksDTO(bookmarkPage);
     }
+
+    @Transactional(readOnly = true)
+    public BookmarksDTO searchBookmarks(String query, Integer page) {
+        int pageNo = page < 1 ? 0 : page - 1 ;
+        Pageable pageable = PageRequest.of(pageNo, 10, Sort.Direction.DESC, "createdAt");
+        //1. 기존 메소드
+        // Page<BookmarkDTO> bookmarkPage = repository.searchBookmarks(query, pageable);
+
+        //2.repository 기존 메소드 대체하는 JPA Query method
+        Page<BookmarkDTO> bookmarkPage = repository.findByTitleContainsIgnoreCase(query, pageable);
+        return new BookmarksDTO(bookmarkPage);
+    }
 }
