@@ -9,6 +9,6 @@ public class HibernateConfiguration {
     
     @Bean
     HibernatePropertiesCustomizer hibernatePropertiesCustomizer() {
-        return props -> props.put("integrator_provider", ClassImportIntegratorProvider.class.getName()); 
+        return props -> props.put("hibernate.integrator_provider", ClassImportIntegratorProvider.class.getName());
     }
 }
